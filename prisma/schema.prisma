@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Employer {
+  id         Int          @id @default(autoincrement())
+  name       String       @unique
+  address    String
+  uinCin     String       @unique
+  tan        String       @unique
+  pan        String       @unique
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  Employee   Employee[]
+  SalarySlip SalarySlip[]
+}
+
+model Employee {
+  id          Int      @id @default(autoincrement())
+  name        String
+  code        String   @unique
+  designation String
+  department  String
+  pan         String   @unique
+  bankAccount String
+  epfAccount  String
+  uan         String   @unique
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  employer   Employer @relation(fields: [employerId], references: [id])
+  employerId Int
+
+  salarySlips SalarySlip[]
+}
+
+model SalarySlip {
+  id             Int      @id @default(autoincrement())
+  month          Int
+  year           Int
+  totalWorkDays  Int
+  numberOfLeaves Int
+  earnings       Json
+  deductions     Json
+  netPay         Float
+  netPayWords    String
+  leaveBalance   Int
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  employee   Employee @relation(fields: [employeeId], references: [id])
+  employeeId Int
+  employer   Employer @relation(fields: [employerId], references: [id])
+  employerId Int
+}

@@ -4,12 +4,14 @@ Backend API Endpoints
 
 - `POST /api/employers`: Add a new employer
 - `GET /api/employers/:id`: Get employer details
+- `GET /api/employers/`: Get all employer details
 - `PUT /api/employers/:id`: Update employer details
 
 # Employee Management
 
 - `POST /api/employees`: Add a new employee
 - `GET /api/employees/:id`: Get employee details
+- `GET /api/employees/`: Get all employee details
 - `PUT /api/employees/:id`: Update employee details
 
 # Salary Slip Management
